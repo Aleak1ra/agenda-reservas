@@ -9,6 +9,7 @@ interface ServiceItemProps {
 }
 
 const ServiceItemsBarberShop = async ({ service }: ServiceItemProps) => {
+  const maxLength = 50;
   return (
     <div>
       <Card className="mb-4">
@@ -25,9 +26,12 @@ const ServiceItemsBarberShop = async ({ service }: ServiceItemProps) => {
           <div className="space-y-3">
             <h3 className="font-semibold">{service?.name}</h3>
             <div className="flex justify-between">
-              
-            <p className="text-sm text-gray-400 p-1">{service?.description}</p>
-            <Button variant="secondary">Reservar</Button>
+              <p className="text-sm text-gray-400 p-1">
+                {service?.description?.length > maxLength
+                  ? `${service.description.substring(0, maxLength)}...`
+                  : service?.description}
+              </p>
+              <Button variant="secondary">Reservar</Button>
             </div>
 
             <p className="text-sm font-bold text-primary">
