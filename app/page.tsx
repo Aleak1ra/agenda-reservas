@@ -56,7 +56,7 @@ const Home = async () => {
           className="object-contain rounded-xl"
         />
       </div>
-      <h2 className="px-5 p-4 text-xs uppercase text-gray-400">Agendamentos</h2>
+      <h2 className="px-5 p-4 text-xs font-bold uppercase text-gray-400">Agendamentos</h2>
 
       <div className="px-5">
         <Card className=" rounded-xl">
@@ -83,7 +83,7 @@ const Home = async () => {
         </Card>
       </div>
 
-      <h2 className="px-5 p-4 text-xs uppercase text-gray-400">Recomendados</h2>
+      <h2 className="px-5 p-4 text-xs font-bold uppercase text-gray-400">Recomendados</h2>
       <div className="flex px-5 gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
         {barbershops.map((barbershop) => (
           <BarbershopItem key={barbershop.id} barbershop={barbershop} />

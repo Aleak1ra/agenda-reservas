@@ -1,8 +1,16 @@
+import PhonesItem from "@/app/_components/phones-item";
 import ServiceItemsBarberShop from "@/app/_components/services-item";
 import { Button } from "@/app/_components/ui/button";
+import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon, MapPin, MenuIcon, Star } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  MapPin,
+  MenuIcon,
+  SmartphoneIcon,
+  Star,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -85,6 +93,13 @@ const BarberShopPage = async ({ params }: BarbarshopPageProps) => {
             <ServiceItemsBarberShop key={service.id} service={service} />
           ))}
         </div>
+      </div>
+
+      <div>
+        <h3 className="px-5 pb-4 text-xs uppercase text-gray-400">Contatos</h3>
+        {barbershop.phones.map((phone) => (
+          <PhonesItem key={phone} phone={phone} />
+        ))}
       </div>
     </div>
   );
