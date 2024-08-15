@@ -1,8 +1,10 @@
 import PhonesItem from "@/app/_components/phones-item";
 import ServiceItemsBarberShop from "@/app/_components/services-item";
+import SidebarButton from "@/app/_components/sidebar-button";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
+import { Sheet , SheetTrigger } from "@/app/_components/ui/sheet";
 import { db } from "@/app/_lib/prisma";
 import {
   ChevronLeftIcon,
@@ -47,21 +49,26 @@ const BarberShopPage = async ({ params }: BarbarshopPageProps) => {
 
         <Button
           size="icon"
-          variant="secondary"
-          className="absolute left-4 top-5"
+          variant="outline"
+          className="absolute left-4 top-4"
         >
           <Link href="/">
             <ChevronLeftIcon />
           </Link>
         </Button>
 
-        <Button
-          size="icon"
-          variant="secondary"
-          className="absolute right-4 top-5"
-        >
-          <MenuIcon />
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="absolute right-4 top-4"
+            >
+              <MenuIcon />
+            </Button>
+          </SheetTrigger>
+          <SidebarButton />
+        </Sheet>
       </div>
       <div>
         <h3 className="p-5 text-3xl">{barbershop.name}</h3>
