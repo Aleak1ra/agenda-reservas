@@ -1,3 +1,5 @@
+"use client"
+
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
   Sheet,
@@ -19,8 +21,11 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { signIn } from "next-auth/react";
 
 const SidebarButton = () => {
+
+  const handleLoginWithGoogleClick = () => signIn("google")
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -44,7 +49,7 @@ const SidebarButton = () => {
             </DialogHeader>
             <DialogFooter className="sm:justify-start">
               <DialogClose asChild>
-                <Button type="button" variant="outline" className="flex gap-2 items-center justify-center">
+                <Button type="button" variant="outline" className="flex gap-2 items-center justify-center" onClick={handleLoginWithGoogleClick}>
                   <Image alt="google icon" src="/google.svg" width={18} height={18}></Image>
                   <p className="font-bold">Google</p>
                 </Button>
