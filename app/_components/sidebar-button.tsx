@@ -2,10 +2,10 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
   Sheet,
   MenuIcon,
-  Link,
   HomeIcon,
   CalendarIcon,
   LogOutIcon,
+  LogIn,
 } from "lucide-react";
 import { quickSearchOptions } from "../_constants/search";
 import { Button } from "./ui/button";
@@ -17,6 +17,8 @@ import {
   SheetClose,
 } from "./ui/sheet";
 import Image from "next/image";
+import Link from "next/link";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 const SidebarButton = () => {
   return (
@@ -25,15 +27,39 @@ const SidebarButton = () => {
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
 
-      <div className="flex items-center gap-3 border-b border-solid py-5">
-        <Avatar>
-          <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      <div className="flex items-center gap-3 border-b border-solid py-5 justify-between">
+        <h2 className="px-5">Faça seu login</h2>
+        <Dialog>
+          <DialogTrigger>
+            <Button variant={"outline"}>
+              <LogIn />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Faça o login na plataforma:</DialogTitle>
+              <DialogDescription>
+                Faça o login com sua conta Google!
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-start">
+              <DialogClose asChild>
+                <Button type="button" variant="outline" className="flex gap-2 items-center justify-center">
+                  <Image alt="google icon" src="/google.svg" width={18} height={18}></Image>
+                  <p className="font-bold">Google</p>
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        {/* <Avatar>
+          <AvatarImage className="max-h-[100px] rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
         </Avatar>
 
         <div>
           <p className="font-bold">Felipe Rocha</p>
           <p className="text-xs">felipe@fullstackclub.io</p>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
