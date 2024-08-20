@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
@@ -20,12 +20,23 @@ import {
 } from "./ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { signIn } from "next-auth/react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const SidebarButton = () => {
+  const { data } = useSession();
+  const handleLoginWithGoogleClick = () => signIn("google");
+  const handleLogoutClick = () => signOut();
 
-  const handleLoginWithGoogleClick = () => signIn("google")
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -33,14 +44,58 @@ const SidebarButton = () => {
       </SheetHeader>
 
       <div className="flex items-center gap-3 border-b border-solid py-5 justify-between">
-        <h2 className="px-5">Faça seu login</h2>
+        {data?.user ? (
+          <div className="">
+            <Avatar>
+              <AvatarImage
+                className="max-h-[100px] rounded-full"
+                src={data.user?.image || ""}
+              />
+            </Avatar>
+
+            <p className="font-bold">{data.user?.name}</p>
+            <p className="text-xs">{data.user?.email}</p>
+          </div>
+        ) : (
+          <h2 className="px-5">Faça seu login</h2>
+        )}
+
         <Dialog>
           <DialogTrigger>
-            <Button variant={"outline"}>
-              <LogIn />
-            </Button>
+            {data?.user ? (
+              <Button variant={"outline"}>
+                Sair
+              </Button>
+            ) : (
+              <Button variant={"outline"}>
+                <LogIn />
+                Entrar
+              </Button>
+            )}
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          {data?.user ? (
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Deseja realmente sair?</DialogTitle>
+                <DialogDescription>
+                  Clique no botão abaixo para confirmar.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="sm:justify-start">
+                <DialogClose asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex gap-2 items-center justify-center"
+                    onClick={handleLogoutClick}
+                  >
+                    Confirmar
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          ) : (
+            <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Faça o login na plataforma:</DialogTitle>
               <DialogDescription>
@@ -56,15 +111,8 @@ const SidebarButton = () => {
               </DialogClose>
             </DialogFooter>
           </DialogContent>
+          )}
         </Dialog>
-        {/* <Avatar>
-          <AvatarImage className="max-h-[100px] rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1760&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-        </Avatar>
-
-        <div>
-          <p className="font-bold">Felipe Rocha</p>
-          <p className="text-xs">felipe@fullstackclub.io</p>
-        </div> */}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
@@ -98,13 +146,6 @@ const SidebarButton = () => {
             {option.title}
           </Button>
         ))}
-      </div>
-
-      <div className="flex flex-col gap-2 py-5">
-        <Button variant="ghost" className="justify-start gap-2">
-          <LogOutIcon size={18} />
-          Sair da conta
-        </Button>
       </div>
     </SheetContent>
   );
